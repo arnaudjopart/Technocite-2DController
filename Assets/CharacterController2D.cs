@@ -12,6 +12,8 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private float m_gravityFallModifier=3;
     [SerializeField] private float m_jumpHeightMax=2;
     [SerializeField] private float m_speed;
+    [SerializeField] private Transform m_rightColliderCheckTransform;
+    [SerializeField] private LayerMask m_interactableLayerMask;
 
     // Start is called before the first frame update
     private void Awake()
@@ -48,5 +50,8 @@ public class CharacterController2D : MonoBehaviour
             velocity += Vector2.up * (Physics2D.gravity.y *m_gravityFallModifier* Time.deltaTime);
             m_rigidbody2D.velocity = velocity;
         }
+
+        bool rightColliderCheck = Physics2D.OverlapCircle(m_rightColliderCheckTransform.position, .14f, m_interactableLayerMask);
+        print("rightColliderCheck: " + rightColliderCheck);
     }
 }
