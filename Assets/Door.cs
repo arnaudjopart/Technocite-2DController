@@ -18,13 +18,17 @@ public class Door : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D (Collider2D other)
+    /*private void OnTriggerEnter2D (Collider2D other)
     {
         m_message.SetActive(true);
-    }
+    }*/
     private void OnTriggerExit2D(Collider2D other)
     {
         m_message.SetActive(false);
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        m_message.SetActive(true);
+    }
 }
