@@ -141,7 +141,7 @@ namespace Arnaudtest
         private bool CanDoDoubleJump()
         {
             //return m_isAlreadyDoubleJumping == false;
-            return (m_playerCurrentAbilities & m_doubleJump.m_value) > 0 && m_isAlreadyDoubleJumping == false;
+            return true;// (m_playerCurrentAbilities & m_doubleJump.m_value) > 0 && m_isAlreadyDoubleJumping == false;
         }
 
         private void FixedUpdate()
@@ -162,7 +162,7 @@ namespace Arnaudtest
 
         internal void UnlockDoubleJump()
         {
-            m_playerCurrentAbilities += m_doubleJump.m_value;
+            //m_playerCurrentAbilities += m_doubleJump.m_value;
         }
     }
 

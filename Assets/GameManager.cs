@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace com.ajc.turnbase.manager
@@ -22,6 +23,9 @@ namespace com.ajc.turnbase.manager
         private Character m_currentTarget;
         [SerializeField] private Transform m_targetReticule;
         [SerializeField] private GameObject m_validateButton;
+        [SerializeField] private GameObject m_abilityButtonPrefab;
+        [SerializeField] private Transform m_buttonContainer;
+        private Ability m_currentAbility;
 
         void Start()
         {
@@ -85,18 +89,36 @@ namespace com.ajc.turnbase.manager
 
         public void Select(Character _character)
         {
-            if(m_currentSelectedCharacter!=null) m_currentSelectedCharacter.Deselect();
-            m_currentSelectedCharacter = _character;
+            if (m_currentAbility != null) SetTarget(_character);
+            else
+            {
+                if (m_currentSelectedCharacter != null) m_currentSelectedCharacter.Deselect();
+                m_currentSelectedCharacter = _character;
+                
+                m_currentSelectedCharacter.Select();
+                DisplayAbilitiesButtons();
+            }
+
+            
+        }
+
+        private void DisplayAbilitiesButtons()
+        {
+            foreach(Ability ability in m_currentSelectedCharacter.GetListOfAbilities())
+            {
+                var instance = Instantiate(m_abilityButtonPrefab, m_buttonContainer);
+                instance.GetComponent<AbilityButton>().Initialize(ability, this);
+            }
         }
 
         public void SetTarget(Character _character)
         {
             if(!m_currentSelectedCharacter) return;
             m_currentTarget = _character;
-            m_validateButton.SetActive(true);
+            
             m_targetReticule.position = m_currentTarget.transform.position;
             m_targetReticule.gameObject.SetActive(true);
-
+            if (m_currentAbility != null) m_currentAbility.Apply(m_currentSelectedCharacter, m_currentTarget);
         }
 
         public void AttackCurrentTarget()
@@ -110,7 +132,12 @@ namespace com.ajc.turnbase.manager
             m_currentTarget = null;
             m_currentSelectedCharacter=null;
         }
-    }
 
+        internal void ProcessClick(Ability _ability)
+        {
+            m_currentAbility = _ability;
+            
+        }
+    }
 }
 

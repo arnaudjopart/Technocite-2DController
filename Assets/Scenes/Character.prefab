@@ -359,6 +359,7 @@ MonoBehaviour:
   m_healthPoints: 10
   m_highlightSprite: {fileID: 2088416608248911531}
   m_healthText: {fileID: 4262953755364107987}
+  m_abilities: []
   m_type: 0
 --- !u!58 &3664628904133511890
 CircleCollider2D:

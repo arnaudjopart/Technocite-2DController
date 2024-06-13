@@ -9,6 +9,7 @@ namespace com.ajc.turnbase
     public class Character : MonoBehaviour
     {
         [SerializeField] private CharacterStatScriptableObject m_stats;
+        private CharacterAbilitiesManagerBase m_abilityManager;
         [SerializeField] private int m_healthPoints =10;
         private GameManager m_manager;
         [SerializeField] private GameObject m_highlightSprite;
@@ -28,10 +29,17 @@ namespace com.ajc.turnbase
             return m_healthPoints;
         }
 
+        public Ability[] GetListOfAbilities()
+        {
+            return m_abilityManager.abilities.ToArray();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            m_abilityManager = GetComponent<CharacterAbilitiesManagerBase>();
             m_healthPoints = m_stats.m_startHealthPoints;
+            
         }
 
         // Update is called once per frame
@@ -42,12 +50,11 @@ namespace com.ajc.turnbase
 
         private void OnMouseDown()
         {
-            if (m_isDone) return;
             switch (m_type)
             {
                 case TYPE.FRIEND:
                     m_manager.Select(this);
-                    m_highlightSprite.SetActive(true);
+                    
                     break;
                 case TYPE.FOE:
                     m_manager.SetTarget(this);
@@ -65,6 +72,13 @@ namespace com.ajc.turnbase
             m_highlightSprite.SetActive(false);
         }
 
+        public void Attack(Character _target, int _damage)
+        {
+            _target.TakeDamage(_damage);
+            m_isDone = true;
+
+        }
+
         public void Attack(Character _target)
         {
             _target.TakeDamage(m_stats.m_damagePoints);
@@ -72,9 +86,49 @@ namespace com.ajc.turnbase
 
         }
 
-        private void TakeDamage(int m_damagePoints)
+        public void TakeDamage(int m_damagePoints)
         {
             m_healthPoints -= m_damagePoints;
+        }
+
+        internal int GetDamage()
+        {
+            return m_stats.m_damagePoints;
+        }
+
+        internal void DecreaseAttackPoint(int m_cost)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Heal(Character m_currentTarget)
+        {
+            m_currentTarget.AddHealth(2);
+        }
+
+        private void AddHealth(int v)
+        {
+            m_healthPoints += v;
+        }
+
+        internal void BigAttack(Character m_currentTarget)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void HealAll(Character m_currentTarget)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void HealAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Select()
+        {
+            m_highlightSprite.SetActive(true);
         }
     }
 }

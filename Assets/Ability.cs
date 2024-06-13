@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using com.ajc.turnbase;
 
-[CreateAssetMenu(menuName = "Arnaud/Abilities")]
-public class Ability : ScriptableObject
+public abstract class Ability 
 {
-    public int m_value;
+    public string Name { get; set; }
     public string m_description;
+
+    public abstract void Apply(Character _from, Character _to);
+    
 }
