@@ -1,4 +1,6 @@
-﻿public interface ICollectable
+﻿using Arnaudtest;
+
+public interface ICollectable
 {
     void Collect(TheBestCharacterController theBestCharacterController);
 }

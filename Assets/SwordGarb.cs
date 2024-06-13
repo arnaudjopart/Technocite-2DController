@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Arnaudtest;
 using UnityEngine;
 
 public class SwordGarb : MonoBehaviour, ICollectable

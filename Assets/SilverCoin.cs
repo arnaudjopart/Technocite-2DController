@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 
-public class SilverCoin : MonoBehaviour, ICollectable
+
+namespace Arnaudtest
 {
-    public void Collect(TheBestCharacterController theBestCharacterController)
+    public class SilverCoin : MonoBehaviour, ICollectable
     {
-        theBestCharacterController.UnlockDoubleJump();
-        Destroy(gameObject);
+        public void Collect(TheBestCharacterController theBestCharacterController)
+        {
+            theBestCharacterController.UnlockDoubleJump();
+            Destroy(gameObject);
+        }
+
     }
 }
+
