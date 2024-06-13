@@ -1,6 +1,7 @@
 using com.ajc.turnbase.manager;
 using com.ajc.turnbase.scriptableObject;
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace com.ajc.turnbase
@@ -11,6 +12,7 @@ namespace com.ajc.turnbase
         [SerializeField] private int m_healthPoints =10;
         private GameManager m_manager;
         [SerializeField] private GameObject m_highlightSprite;
+        [SerializeField] private TMP_Text m_healthText;
 
         public enum TYPE
         {
@@ -35,11 +37,12 @@ namespace com.ajc.turnbase
         // Update is called once per frame
         void Update()
         {
-
+            m_healthText.SetText(m_healthPoints.ToString());
         }
 
         private void OnMouseDown()
         {
+            if (m_isDone) return;
             switch (m_type)
             {
                 case TYPE.FRIEND:

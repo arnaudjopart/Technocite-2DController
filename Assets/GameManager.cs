@@ -21,6 +21,7 @@ namespace com.ajc.turnbase.manager
         private Character m_currentSelectedCharacter;
         private Character m_currentTarget;
         [SerializeField] private Transform m_targetReticule;
+        [SerializeField] private GameObject m_validateButton;
 
         void Start()
         {
@@ -92,8 +93,22 @@ namespace com.ajc.turnbase.manager
         {
             if(!m_currentSelectedCharacter) return;
             m_currentTarget = _character;
+            m_validateButton.SetActive(true);
             m_targetReticule.position = m_currentTarget.transform.position;
+            m_targetReticule.gameObject.SetActive(true);
+
+        }
+
+        public void AttackCurrentTarget()
+        {
+            m_currentSelectedCharacter.Deselect();
+            
             m_currentSelectedCharacter.Attack(m_currentTarget);
+            m_validateButton.SetActive(false);
+            m_targetReticule.gameObject.SetActive(false) ;
+
+            m_currentTarget = null;
+            m_currentSelectedCharacter=null;
         }
     }
 
